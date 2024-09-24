@@ -14,12 +14,23 @@ const router = express.Router();
 // Return all classes
 router.get("/", async (req, res) => {
   let collection = await db.collection("classes");
-  let results = await collection.find({}).toArray();
+  let result = await collection.find({}).toArray();
 
-  if (!results) res.status(404).send("Error with getting all classes");
-  else res.send(results).status(200);
+  if (!result) res.status(404).send("Error with getting all classes");
+  else res.send(result).status(200);
 
 });
+
+// Return specific class based on id
+router.get("/:id", async (req, res) => {
+  let query = { _id: new ObjectId(req.params.id )};
+
+  let collection = await db.collection("classes");
+  let result = await collection.findOne(query);
+
+  if (!result) res.status(404).send(`Error with getting class with id ${req.params.id}`);
+  else res.send(result).status(200);
+})
 
 
 // Create new class

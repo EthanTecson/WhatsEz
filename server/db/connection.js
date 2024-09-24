@@ -16,6 +16,7 @@ const client = new MongoClient(uri, {
     },
 });
 
+// Pinging for admin database
 try {
     //  Connect client (the database) to the server
     await client.connect();
@@ -25,8 +26,22 @@ try {
         "Pinged your deployment. You successfully connected to MongoDB!"
     );
 
+
+
 } catch (error) {
     console.error(err);
 }
+
+// Pinging for TESTING database
+try {
+    await client.connect();
+
+    await client.db('TESTING').command({ ping: 1 });
+    console.log("Ping to TESTING successful!");
+} catch (err) {
+    console.error(err);
+}
+
+let db = client.db("TESTING");
 
 export default db;
