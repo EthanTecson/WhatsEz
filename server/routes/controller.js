@@ -12,7 +12,7 @@ import { ObjectId } from "mongodb";
 const router = express.Router();
 
 // Return all classes
-router.get("/", async (req, res) => {
+router.get("/records", async (req, res) => {
   let collection = await db.collection("classes");
   let result = await collection.find({}).toArray();
 
@@ -23,7 +23,14 @@ router.get("/", async (req, res) => {
 
 // Return specific class based on id
 router.get("/:id", async (req, res) => {
-  let query = { _id: new ObjectId(req.params.id )};
+
+  const id = req.params.id;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).send({ message: "Invalid ID format" });
+  }
+
+  let query = { _id: new ObjectId( req.params.id )};
 
   let collection = await db.collection("classes");
   let result = await collection.findOne(query);
@@ -32,8 +39,7 @@ router.get("/:id", async (req, res) => {
   else res.send(result).status(200);
 })
 
-
-// Create new class
+//// Create new class
 router.post("/", async (req, res) => {
  try {
   let newClass = {
@@ -55,6 +61,12 @@ router.post("/", async (req, res) => {
 // Delete a class
 router.delete("/:id", async (req, res) => {
   try {
+    const id = req.params.id;
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).send({ message: "Invalid ID format" });
+    }
+
     const query = { _id: new ObjectId(req.params.id)};
 
     let collection = await db.collection("classes");
