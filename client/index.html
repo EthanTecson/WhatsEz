@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsEz</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Welcome to WhatsEz</h1>
-    <button id="fetchRecordsButton">Fetch Records</button>
+    <button id="fetchRecordsButton" class="space">Fetch Records</button>
 
-    <input type="text" placeholder="Enter value here" id="classInput">
-    <input type="button" value="Click me" id="inputButton">
+    <p id="fetchRecordsResponse"></p>
 
-    <p id="output"></p>
+    <br>
+
+    <div class="space">
+        <p>Enter Class Name Here: </p>
+        <input type="text" placeholder="Enter value here" id="classInput">
+    </div>
+    
+    <div class="space"></div>
+        <p>Enter ID Here: </p>
+        <input type="text" placeholder="Enter value here" id="IDInput">
+        <input type="button" value="Publish Class" id="postButton" class="space">  
+    </div>
 
     <script src="script.js"></script>
 </body>

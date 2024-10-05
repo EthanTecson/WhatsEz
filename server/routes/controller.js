@@ -39,7 +39,7 @@ router.get("/:id", async (req, res) => {
   else res.send(result).status(200);
 })
 
-//// Create new class
+// Create new class
 router.post("/", async (req, res) => {
  try {
   let newClass = {
