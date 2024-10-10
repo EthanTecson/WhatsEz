@@ -1,7 +1,10 @@
+// For creating a class
 const classInput = document.getElementById("classInput");
-const classOutput = document.getElementById("classOutput");
-const button = document.getElementById("postButton");
+const classIDInput = document.getElementById("IDInput");
+const createClassResponse = document.getElementById("createClassResponse");
+const button = document.getElementById("publishClassButton");
 
+// For getting classes
 const fetchRecordsResponse = document.getElementById("fetchRecordsResponse");
 
 async function fetchClasses() {
@@ -13,11 +16,10 @@ async function fetchClasses() {
         // Clear Previous Content
         fetchRecordsResponse.innerHTML = '';
 
-
         if (Array.isArray(data)) {
             data.forEach(item => {
                 const paragraph = document.createElement('p');
-                paragraph.textContent = JSON.stringify(item,null,2);
+                paragraph.textContent = item.class;
                 fetchRecordsResponse.appendChild(paragraph);
             })
         } else {
@@ -29,8 +31,30 @@ async function fetchClasses() {
     }
 };
 
-function makeRecord() {
-    classOutput.innerHTML = classInput.value;
+async function makeClass() {
+    try {
+        const response = await fetch('/api/records', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                class: classInput.value,
+                id: classIDInput.value 
+            })
+    }) 
+
+    createClassResponse.innerHTML = '';
+
+    if (response.ok){
+        console.log('Successfully created class');       
+        createClassResponse.innerHTML = 'Successfully created class1';
+    }
+    } catch (error){
+        console.error('Error with trying to publish class:', error);
+        createClassResponse.innerHTML = 'Error with creating class. Please try again.';
+    }
+    
 };
 
 
@@ -38,4 +62,4 @@ function makeRecord() {
 document.getElementById("fetchRecordsButton").addEventListener('click', fetchClasses);
 
 // Create Class
-button.addEventListener('click',makeRecord);
+button.addEventListener('click',makeClass);

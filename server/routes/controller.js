@@ -40,7 +40,7 @@ router.get("/:id", async (req, res) => {
 })
 
 // Create new class
-router.post("/", async (req, res) => {
+router.post("/records", async (req, res) => {
  try {
   let newClass = {
     id: req.body.id,
